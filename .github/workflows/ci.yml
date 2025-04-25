@@ -1,24 +1,20 @@
 jobs:
-  unit-test:
+  test:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Run unit tests
-        run: npm run test:unit
 
-  integration-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Run integration tests
-        run: npm run test:integration
+      - name: Cache Node.js dependencies
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-  e2e-test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-      - name: Run E2E tests
-        run: npm run test:e2e
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests
+        run: npm test
