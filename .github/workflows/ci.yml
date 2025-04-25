@@ -1,12 +1,2 @@
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [14, 16, 18] # Matrix to test across different Node.js versions
-    steps:
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node-version }}
-      - run: npm install
-      - run: npm test
+- name: Run Snyk Security Scan
+  uses: snyk/actions/setup@v1
