@@ -1,26 +1,22 @@
-jobs:
-  deploy-dev:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Deploy to Dev
-        run: firebase deploy --only hosting:dev
-
-  deploy-staging:
-    runs-on: ubuntu-latest
-    needs: deploy-dev
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Deploy to Staging
-        run: firebase deploy --only hosting:staging
-
-  deploy-prod:
-    runs-on: ubuntu-latest
-    needs: deploy-staging
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Deploy to Prod
-        run: firebase deploy --only hosting:prod
+openapi: 3.0.0
+info:
+  title: Example API
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      summary: Returns a list of users
+      responses:
+        '200':
+          description: A list of users
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
