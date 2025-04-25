@@ -1,20 +1,12 @@
-name: CodeQL Analysis
-
-on:
-  push:
-    branches:
-      - main
-
 jobs:
-  analyze:
-    name: Analyze code with CodeQL
+  test:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [14, 16, 18] # Matrix to test across different Node.js versions
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up CodeQL
-        uses: github/codeql-action/init@v2
-
-      - name: Run CodeQL analysis
-        uses: github/codeql-action/analyze@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - run: npm test
