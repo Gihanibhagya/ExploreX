@@ -1,20 +1,20 @@
+name: CodeQL Analysis
+
+on:
+  push:
+    branches:
+      - main
+
 jobs:
-  test:
+  analyze:
+    name: Analyze code with CodeQL
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Cache Node.js dependencies
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Set up CodeQL
+        uses: github/codeql-action/init@v2
 
-      - name: Install dependencies
-        run: npm install
-
-      - name: Run tests
-        run: npm test
+      - name: Run CodeQL analysis
+        uses: github/codeql-action/analyze@v2
