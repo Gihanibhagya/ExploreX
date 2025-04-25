@@ -1,1 +1,6 @@
+{
+  "scripts": {
+    "release": "standard-version"
+  }
+}
 
